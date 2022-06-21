@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { getExpenses } from "../utils/http";
 
 export const ExpensesContext = createContext();
 

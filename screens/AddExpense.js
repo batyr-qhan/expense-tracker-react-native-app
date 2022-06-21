@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import { ExpensesContext } from "../store/context";
+import LoadingOverlay from "../UI/LoadingOverlay";
+import { createExpense } from "../utils/http";
 
 const AddExpense = ({ navigation }) => {
   const [title, setTitle] = useState("");
@@ -9,6 +11,26 @@ const AddExpense = ({ navigation }) => {
   const [error, setError] = useState("");
 
   const { setAllExpenses } = useContext(ExpensesContext);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submitHandler = async (data) => {
+    const { title, amount } = data;
+
+    setIsSubmitting(true);
+    const id = await createExpense({ title, amount });
+    setIsSubmitting(false);
+
+    setAllExpenses((prevState) => [
+      { title: title, amount: amount, id: id },
+      ...prevState,
+    ]);
+
+    navigation.goBack();
+  };
+
+  if (isSubmitting) {
+    return <LoadingOverlay />;
+  }
 
   return (
     <View style={styles.container}>
@@ -27,13 +49,7 @@ const AddExpense = ({ navigation }) => {
       <Button
         onPress={() => {
           if (title && amount) {
-            setAllExpenses((prevState) => [
-              ...prevState,
-              { id: Math.random(), title: title, amount: amount },
-            ]);
-            setTitle("");
-            setAmount("");
-            navigation.navigate("All");
+            submitHandler({ title, amount });
           } else {
             setError("please fill out all fields");
           }
@@ -55,8 +71,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: GlobalStyles.colors.metallicGrey,
-    // alignItems: "center",
-    // justifyContent: "center",
     padding: 8,
   },
   input: {
