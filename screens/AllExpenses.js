@@ -10,11 +10,9 @@ function AllExpenses({ navigation }) {
   const { allExpenses, setAllExpenses } = useContext(ExpensesContext);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState("");
-
-  // console.log("all expenses rendered");
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    console.log("context useeffect render");
     async function fetchData() {
       try {
         setIsFetching(true);
@@ -31,6 +29,17 @@ function AllExpenses({ navigation }) {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    totalSpent();
+  }, [allExpenses]);
+
+  const totalSpent = () => {
+    let totalSum = allExpenses.reduce((sum, value) => {
+      return sum + +value.amount;
+    }, 0);
+    setTotalAmount(totalSum);
+  };
 
   if (isFetching) {
     return <LoadingOverlay />;
@@ -49,6 +58,14 @@ function AllExpenses({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.listItem}>
+        <View style={styles.infoContainer}>
+          <Text style={styles.text}>Total Spent:</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.text}>{totalAmount}$</Text>
+        </View>
+      </View>
       <FlatList
         data={allExpenses}
         renderItem={({ item }) => {

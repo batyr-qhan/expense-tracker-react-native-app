@@ -44,7 +44,6 @@ const AddExpense = ({ navigation }) => {
   };
 
   const onDateChange = (event, selectedDate) => {
-    console.log(event);
     const currentDate = selectedDate;
     const formattedDate =
       currentDate.getFullYear() +
@@ -101,7 +100,7 @@ const AddExpense = ({ navigation }) => {
         style={styles.input}
       />
 
-      <Text style={styles.input}>{expenseData.date}</Text>
+      <Text style={styles.input}>{expenseData.expenseDate}</Text>
 
       <Button
         title="select date"
@@ -126,8 +125,6 @@ const AddExpense = ({ navigation }) => {
       <Button
         onPress={() => {
           const { title, amount, expenseDate } = expenseData;
-
-          console.log(title, amount, expenseDate);
 
           if (title && !isNaN(amount) && expenseDate) {
             submitHandler({ title, amount, expenseDate });

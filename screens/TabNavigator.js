@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text } from "react-native";
 import AllExpenses from "./AllExpenses";
-import RecentExpenses from "./RecentExpenses";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../constants/styles";
+import ProfileScreen from "./ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +15,7 @@ const TabNavigator = (props) => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Recent") {
+          if (route.name === "Profile") {
             iconName = focused
               ? "information-circle"
               : "information-circle-outline";
@@ -40,10 +40,9 @@ const TabNavigator = (props) => {
       })}
     >
       <Tab.Screen
-        name="Recent"
-        component={RecentExpenses}
+        name="All"
+        component={AllExpenses}
         options={{
-          // headerShown:
           headerRight: () => {
             let navigation = useNavigation();
             return (
@@ -60,9 +59,10 @@ const TabNavigator = (props) => {
         }}
       />
       <Tab.Screen
-        name="All"
-        component={AllExpenses}
+        name="Profile"
+        component={ProfileScreen}
         options={{
+          // headerShown:
           headerRight: () => {
             let navigation = useNavigation();
             return (
