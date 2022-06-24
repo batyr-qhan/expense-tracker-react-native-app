@@ -5,10 +5,14 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../constants/styles";
 import ProfileScreen from "./ProfileScreen";
+import { useContext } from "react";
+import { AuthContext } from "../store/auth-context";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = (props) => {
+  const authCtx = useContext(AuthContext);
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -67,12 +71,10 @@ const TabNavigator = (props) => {
             let navigation = useNavigation();
             return (
               <Ionicons
-                name="add-outline"
+                name="log-out-outline"
                 size={24}
                 color="#fff"
-                onPress={() => {
-                  navigation.navigate("AddExpense");
-                }}
+                onPress={authCtx.logout}
               />
             );
           },

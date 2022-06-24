@@ -10,9 +10,6 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [company, setCompany] = useState("");
 
   const navigation = useNavigation();
 
@@ -33,15 +30,6 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
       case "confirmPassword":
         setEnteredConfirmPassword(enteredValue);
         break;
-      case "firstName":
-        setFirstName(enteredValue);
-        break;
-      case "lastName":
-        setLastName(enteredValue);
-        break;
-      case "company":
-        setCompany(enteredValue);
-        break;
     }
   }
 
@@ -55,20 +43,6 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
 
   return (
     <ScrollView style={styles.form}>
-      {!isLogin && (
-        <>
-          <Input
-            label="First name"
-            onUpdateValue={updateInputValueHandler.bind(this, "firstName")}
-            value={firstName}
-          />
-          <Input
-            label="Last name"
-            onUpdateValue={updateInputValueHandler.bind(this, "lastName")}
-            value={lastName}
-          />
-        </>
-      )}
       <Input
         label="Email Address"
         onUpdateValue={updateInputValueHandler.bind(this, "email")}
@@ -97,6 +71,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         <Button
           onPress={submitHandler}
           title={isLogin ? "Log In" : "Sign Up"}
+          stylesProp={{ marginBottom: 5 }}
         />
         <SecondaryButton
           onPress={() => {

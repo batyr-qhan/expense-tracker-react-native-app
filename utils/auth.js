@@ -31,5 +31,5 @@ export async function getUserData(idToken) {
       idToken: idToken,
     }
   );
-  console.log("this is user data", response.data);
+  return response.data;
 }

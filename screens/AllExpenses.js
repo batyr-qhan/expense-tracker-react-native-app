@@ -17,7 +17,6 @@ function AllExpenses({ navigation }) {
       try {
         setIsFetching(true);
         const response = await getExpenses();
-        console.log(response);
         setIsFetching(false);
         setAllExpenses(response.reverse());
       } catch (err) {
@@ -60,10 +59,10 @@ function AllExpenses({ navigation }) {
     <View style={styles.container}>
       <View style={styles.listItem}>
         <View style={styles.infoContainer}>
-          <Text style={styles.text}>Total Spent:</Text>
+          <Text style={[styles.text, styles.titleText]}>Total Spent:</Text>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.text}>{totalAmount}$</Text>
+          <Text style={[styles.text, styles.titleText]}>{totalAmount}$</Text>
         </View>
       </View>
       <FlatList
@@ -132,5 +131,9 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     padding: 8,
     borderRadius: 6,
+  },
+  titleText: {
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
